@@ -38,5 +38,7 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 13747929088 # 13747945472 - 16384 for cryp
 #BOARD_USERDATAIMAGE_PARTITION_SIZE := 3221225472
 
 
+AUDIO_FEATURE_LOW_LATENCY_PRIMARY := true
+
 # Inherit from the proprietary version
 -include vendor/oppo/find7/BoardConfigVendor.mk
