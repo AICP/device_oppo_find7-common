@@ -20,10 +20,8 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 # System properties
 -include $(LOCAL_PATH)/system_prop.mk
 
-# Ramdisk
+# Ramdisk - fstab/init.qcom.rc is different for each variant
 PRODUCT_PACKAGES += \
-    fstab.qcom \
-    init.qcom.rc \
     init.qcom.usb.rc
 
 # Audio
