@@ -114,4 +114,8 @@
 
     <!-- Default value for led color when battery is fully charged -->
     <integer name="config_notificationsBatteryFullARGB">0xff0000ff</integer>
+
+    <!-- Boolean to enable adb by default on a per-device basis -->
+    <bool name="config_enableAdbByDefault">true</bool>
+
 </resources>
