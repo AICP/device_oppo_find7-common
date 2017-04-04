@@ -64,6 +64,8 @@ camera_module_t HAL_MODULE_INFO_SYM = {
     .set_callbacks = NULL, /* remove compilation warnings */
     .get_vendor_tag_ops = NULL, /* remove compilation warnings */
     .open_legacy = NULL, /* remove compilation warnings */
+    .set_torch_mode = NULL, /* remove compilation warnings */
+    .init = NULL, /* remove compilation warnings */
     .reserved = {0}, /* remove compilation warnings */
 };
 
@@ -112,15 +114,24 @@ static char *camera_fixup_getparams(int id, const char *settings)
     params.dump();
 #endif
 
-    const char *videoSizesStr = params.get(android::CameraParameters::KEY_SUPPORTED_VIDEO_SIZES);
-    char tmpsz[strlen(videoSizesStr) + 10 + 1];
-    sprintf(tmpsz, "3840x2160,%s", videoSizesStr);
-    params.set(android::CameraParameters::KEY_SUPPORTED_VIDEO_SIZES, tmpsz);
-
     if (params.get(android::CameraParameters::KEY_RECORDING_HINT)) {
         videoMode = (!strcmp(params.get(
                 android::CameraParameters::KEY_RECORDING_HINT), "true"));
     }
+
+    /* Remove unsupported features */
+    params.remove("af-bracket");
+    params.remove("af-bracket-values");
+    params.remove("chroma-flash");
+    params.remove("chroma-flash-values");
+    params.remove("dis");
+    params.remove("dis-values");
+    params.remove("opti-zoom");
+    params.remove("opti-zoom-values");
+    params.remove("see-more");
+    params.remove("see-more-values");
+    params.remove("still-more");
+    params.remove("still-more-values");
 
     if (!videoMode) {
         /* Back camera */
@@ -134,6 +145,10 @@ static char *camera_fixup_getparams(int id, const char *settings)
             /* Remove HDR scene mode */
             params.set(android::CameraParameters::KEY_SUPPORTED_SCENE_MODES,
                     supportedSceneModes);
+
+            /* Remove ISO */
+            params.remove("iso");
+            params.remove("iso-values");
         }
     }
 
@@ -583,7 +598,7 @@ static int camera_device_open(const hw_module_t *module, const char *name,
         memset(camera_ops, 0, sizeof(*camera_ops));
 
         camera_device->base.common.tag = HARDWARE_DEVICE_TAG;
-        camera_device->base.common.version = 0;
+        camera_device->base.common.version = HARDWARE_DEVICE_API_VERSION(1, 0);
         camera_device->base.common.module = (hw_module_t *)(module);
         camera_device->base.common.close = camera_device_close;
         camera_device->base.ops = camera_ops;

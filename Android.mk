@@ -16,6 +16,6 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifneq ($(filter find7 find7s find7u find7ext,$(TARGET_DEVICE)),)
+ifneq ($(filter find7 find7s,$(TARGET_DEVICE)),)
 include $(call all-subdir-makefiles,$(LOCAL_PATH))
 endif
