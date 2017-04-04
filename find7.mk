@@ -33,6 +33,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     camera.msm8974
 
+# Doze
+PRODUCT_PACKAGES += \
+    OneplusDoze
+
 # NFC packages
 PRODUCT_PACKAGES += \
     nfc.msm8974 \
